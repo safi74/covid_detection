@@ -125,13 +125,13 @@ def load_model(model_name):
     if model_name == 'EfficientNet-B3':
         backbone = timm.create_model('efficientnet_b3', pretrained=True, num_classes=0).to(device)
         input_dim = 1536
-        model_path = "efficientnet_covidnet_large.pt"
+        model_path = "efficientnet_covidnet_large_3.pt"
     else:
         backbone = models.resnet50(pretrained=True)
         backbone = nn.Sequential(*list(backbone.children())[:-1])  # Remove fc layer
         backbone = nn.Sequential(backbone, nn.Flatten()).to(device)
         input_dim = 2048
-        model_path = "resnet_covidnet_large.pt"
+        model_path = "resnet_covidnet_large_2.pt"
 
     model = COVIDNetClassifierLarge(input_dim=input_dim, num_classes=3)
     model.load_state_dict(torch.load(model_path, map_location=device))
